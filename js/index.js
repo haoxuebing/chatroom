@@ -31,7 +31,7 @@ editButton.addEventListener('click', sendMessage);
 logOut.addEventListener('click', closePage);
 
 // 绑定Enter键和发送事件
-document.onkeydown = function (event) {
+document.onkeydown = function(event) {
     var e = event || window.event;
     if (e && e.keyCode === 13) {
         if (editBox.value !== '') {
@@ -44,7 +44,7 @@ document.onkeydown = function (event) {
 function closePage() {
     var userAgent = navigator.userAgent;
     if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") != -1) {
-        window.location.href = "about:blank";
+        window.location.href = "www.chuangzaojie.com:3000";
     } else {
         window.opener = null;
         window.open("", "_self");
@@ -55,20 +55,20 @@ function closePage() {
 var socket = io();
 
 // 当接收到消息并且不是本机时生成聊天气泡
-socket.on('message', function (information) {
+socket.on('message', function(information) {
     if (information.name !== userName.textContent) {
         createOtherMessage(information);
     }
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function (onlinecount) {
+socket.on('connected', function(onlinecount) {
     console.log(onlinecount);
     onlineCount.innerHTML = 'Online:' + onlinecount;
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function (onlinecount) {
+socket.on('disconnected', function(onlinecount) {
     console.log(onlinecount);
     onlineCount.innerHTML = 'Online:' + onlinecount;
 });
