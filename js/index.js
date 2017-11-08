@@ -47,7 +47,7 @@ function closePage() {
         window.location.href = "www.chuangzaojie.com:3000";
     } else {
         window.opener = null;
-        window.open("", "_self");
+        window.open("www.chuangzaojie.com:3000", "_self");
         window.close();
     }
 }
