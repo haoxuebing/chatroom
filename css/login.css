@@ -101,12 +101,12 @@ body {
     right: 0;
 }
 
-.after-arrow{
-     width: 0px;
+.after-arrow {
+    width: 0px;
     height: 0px;
     border-width: 30px;
     border-style: solid;
-    border-color: transparent  transparent transparent #51D15B; 
+    border-color: transparent transparent transparent #51D15B;
 }
 
 .picture-carousel img {
@@ -167,6 +167,15 @@ body {
     font-size: 16px;
 }
 
+.name-box .user-mobile {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    outline-color: #42A855;
+    border: none;
+    font-size: 16px;
+}
+
 
 /*登录按钮*/
 
@@ -198,7 +207,7 @@ body {
 }
 
 .error-box span {
-    visibility: hidden;
+    visibility: visible;
     color: #d43f3a;
     font-size: 14px;
 }
