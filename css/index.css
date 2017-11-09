@@ -223,13 +223,26 @@ body {
 /*主体右侧*/
 
 .chat-body-right {
-    height: 100%;
-    width: 30%;
+    height: 40%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    box-shadow: 1px 1px 15px #7B8C99;
+}
+
+.chat-body-bottom{
+    height: 57%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7%;
+    margin-left: 5px;
     box-shadow: 1px 1px 15px #7B8C99;
 }
 
@@ -237,7 +250,7 @@ body {
 /*右侧内容*/
 
 .user-name {
-    margin: 15px;
+    margin: 5px;
     font-size: 18px;
     font-weight: bold;
     color: #79C2EA;
@@ -254,6 +267,25 @@ body {
     font-weight: bold;
     color: #79C2EA;
 }
+
+.online-user-count{
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+    color: #79C2EA;
+}
+
+.online-user-name{
+    height: 70%;
+    margin: 15px;
+    font-size: 18px;
+    width: 72%;
+    margin-left: 34%;
+    font-weight: bold;
+    color: #79C2EA;
+    overflow: scroll;
+}
+
 
 /*兼容小屏幕*/
 @media screen and (max-width: 420px) {

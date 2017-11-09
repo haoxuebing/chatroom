@@ -14,7 +14,10 @@ var editButton = document.getElementsByClassName('edit-button')[0];
 var userName = document.getElementsByClassName('user-name')[0];
 
 // 获取在线人数栏
-var onlineCount = document.getElementsByClassName('online-count')[0];
+var onlineCount = document.getElementsByClassName('online-user-count')[0];
+
+// 在线用户框
+var onlineUsers= document.getElementsByClassName('online-user-name')[0];
 
 // 把登录页面的名称放在右侧
 userName.innerHTML = url[1].split('=')[1];
@@ -62,15 +65,23 @@ socket.on('message', function (information) {
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function (onlinecount) {
-    console.log(onlinecount);
-    onlineCount.innerHTML = 'Online:' + onlinecount;
+socket.on('connected', function (result) {
+    onlineCount.innerHTML = '在线用户:' + result.onlineCount;
+
+    var text = document.createElement('p');
+    text.id=result.id;
+    text.innerHTML = result.userName;
+    onlineUsers.appendChild(text);
+    onlineUsers.scrollTop = onlineUsers.scrollHeight;
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function (onlinecount) {
-    console.log(onlinecount);
-    onlineCount.innerHTML = 'Online:' + onlinecount;
+socket.on('disconnected', function (result) {
+    onlineCount.innerHTML = '在线用户:' + result.onlineCount;
+
+    //去掉下线用户
+    var oldChild=document.getElementById(result.id);
+    onlineUsers.removeChild(oldChild);
 });
 
 // 发送本机的消息

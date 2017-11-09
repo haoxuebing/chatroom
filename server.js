@@ -4,6 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var querystring=require('querystring')
 var db_http = require('./modules/dbService/db_http');
 
 // 在线人数统计
@@ -18,11 +19,18 @@ app.get('/login.html', function(request, response) {
 // 当有用户连接进来时
 io.on('connection', function(socket) {
 
+    
     db_http.InsertSocket(socket, 1, function(err, rlt) {
         console.log('a user connected');
-
+        
+        var query=querystring.parse(socket.handshake.headers.referer);
+        var data={
+            id:socket.id,
+            userName:query.username,
+            onlineCount:++onlineCount
+        }
         // 发送给客户端在线人数
-        io.emit('connected', ++onlineCount);
+        io.emit('connected',data);
     });
 
 
@@ -31,8 +39,15 @@ io.on('connection', function(socket) {
 
         db_http.InsertSocket(socket, 0, function(err, rlt) {
             console.log('user disconnected');
+
+            var query=querystring.parse(socket.handshake.headers.referer);
+            var data={
+                id:socket.id,
+                userName:query.username,
+                onlineCount:--onlineCount
+            }
             // 发送给客户端断在线人数
-            io.emit('disconnected', --onlineCount);
+            io.emit('disconnected', data);
             console.log(onlineCount);
         });
 

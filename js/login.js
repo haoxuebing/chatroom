@@ -50,13 +50,15 @@ loginButton.addEventListener('click', function() {
     } else if (userName.value.length > 8) {
         errorMessage.innerHTML = '昵称不能超过8位';
         errorMessage.style.visibility = 'visible';
-    } else if (userMobile.value === '') {
-        errorMessage.innerHTML = '请输入手机号';
-        errorMessage.style.visibility = 'visible';
-    } else if (userMobile.value.length != 11) {
-        errorMessage.innerHTML = '手机号错误';
-        errorMessage.style.visibility = 'visible';
-    } else {
+    } 
+    // else if (userMobile.value === '') {
+    //     errorMessage.innerHTML = '请输入手机号';
+    //     errorMessage.style.visibility = 'visible';
+    // } else if (userMobile.value.length != 11) {
+    //     errorMessage.innerHTML = '手机号错误';
+    //     errorMessage.style.visibility = 'visible';
+    // } 
+    else {
         window.location.href =
             encodeURI('index.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
                 '&username=' + userName.value + '&usermobile=' + userMobile.value);
