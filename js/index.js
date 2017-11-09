@@ -31,7 +31,7 @@ editButton.addEventListener('click', sendMessage);
 logOut.addEventListener('click', closePage);
 
 // 绑定Enter键和发送事件
-document.onkeydown = function(event) {
+document.onkeydown = function (event) {
     var e = event || window.event;
     if (e && e.keyCode === 13) {
         if (editBox.value !== '') {
@@ -55,20 +55,20 @@ function closePage() {
 var socket = io();
 
 // 当接收到消息并且不是本机时生成聊天气泡
-socket.on('message', function(information) {
+socket.on('message', function (information) {
     if (information.name !== userName.textContent) {
         createOtherMessage(information);
     }
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function(onlinecount) {
+socket.on('connected', function (onlinecount) {
     console.log(onlinecount);
     onlineCount.innerHTML = 'Online:' + onlinecount;
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function(onlinecount) {
+socket.on('disconnected', function (onlinecount) {
     console.log(onlinecount);
     onlineCount.innerHTML = 'Online:' + onlinecount;
 });
@@ -116,6 +116,10 @@ function createMyMessage() {
     userInformation.appendChild(userChatName);
     myMessageBox.appendChild(userInformation);
 
+    var timeBox = document.createElement('div');
+    timeBox.align = 'center';
+    timeBox.innerHTML = new Date().toLocaleString();
+    chatContent.appendChild(timeBox);
     chatContent.appendChild(myMessageBox);
 
     chatContent.scrollTop = chatContent.scrollHeight;
@@ -126,8 +130,13 @@ function createOtherMessage(information) {
     var otherMessageBox = document.createElement('div');
     otherMessageBox.className = 'other-message-box';
 
+
+    // var timeHtml = '<div align="center">'+information.time+'</div>';
+    // otherMessageBox.appendChild(timeHtml);
+
     var otherUserInformation = document.createElement('div');
     otherUserInformation.className = 'other-user-information';
+
     var userChatImg = document.createElement('img');
     userChatImg.className = 'user-chat-img';
     userChatImg.src = information.img;
@@ -148,6 +157,11 @@ function createOtherMessage(information) {
     text.innerHTML = information.chatContent;
     otherMessageContent.appendChild(text);
     otherMessageBox.appendChild(otherMessageContent);
+
+    var timeBox = document.createElement('div');
+    timeBox.align = 'center';
+    timeBox.innerHTML = new Date().toLocaleString();
+    chatContent.appendChild(timeBox);
 
     chatContent.appendChild(otherMessageBox);
 
