@@ -47,10 +47,10 @@ document.onkeydown = function (event) {
 function closePage() {
     var userAgent = navigator.userAgent;
     if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") != -1) {
-        window.location.href = "www.chuangzaojie.com:3000";
+        window.location.href = "http://www.chuangzaojie.com:3000";
     } else {
         window.opener = null;
-        window.open("www.chuangzaojie.com:3000", "_self");
+        window.open("http://www.chuangzaojie.com:3000", "_self");
         window.close();
     }
 }
