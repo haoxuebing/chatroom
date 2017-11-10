@@ -15,22 +15,16 @@ var onlineUsers = [];
 app.use(express.static(__dirname));
 
 // 路径映射
-app.get('/login.html', function(request, response) {
+app.get('/', function(request, response) {
     response.sendFile('index.html');
 });
 
-app.get('/server.html', function(request, response) {
-    response.sendFile('server.html');
-});
 
 // 当有用户连接进来时
 io.on('connection', function(socket) {
 
-
     db_http.InsertSocket(socket, 1, function(err, rlt) {
         console.log('a user connected');
-
-
 
         var query = querystring.parse(socket.handshake.headers.referer);
 
