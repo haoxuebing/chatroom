@@ -65,28 +65,28 @@ socket.on('message', function(information) {
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function(onlineUsers) {
-    onlineCount.innerHTML = '在线用户:' + onlineUsers.length;
-
-    var text = document.createElement('p');
-    text.id = onlineUsers.id;
-    text.innerHTML = onlineUsers.userName;
-    onlineUsers.appendChild(text);
-    onlineUsers.scrollTop = onlineUsers.scrollHeight;
+socket.on('connected', function(result) {
+    onlineCount.innerHTML = '在线用户:' + result.length;
+    nowOnlineUsers(result);
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function(onlineUsers) {
-    onlineCount.innerHTML = '在线用户:' + onlineUsers.length;
-
-    //去掉下线用户
-    var oldChild = document.getElementById(result.id);
-    onlineUsers.removeChild(oldChild);
-
+socket.on('disconnected', function(result) {
+    onlineCount.innerHTML = '在线用户:' + result.length;
+    nowOnlineUsers(result);
 });
 
-function nowOnlineUsers() {
-
+function nowOnlineUsers(users) {
+    onlineUsers.innerHTML='';
+    if(users.length>0){
+        users.forEach(function(user) {
+            var text = document.createElement('p');
+            text.id = user.id;
+            text.innerHTML = user.userName;
+            onlineUsers.appendChild(text);
+        });
+    }
+    onlineUsers.scrollTop = onlineUsers.scrollHeight;
 }
 
 // 发送本机的消息
