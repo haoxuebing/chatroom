@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聊天室</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <div class="chat-box">
+        <!--聊天框头部-->
+        <div class="chat-header">
+            <div class="button-box">
+                <input type="button" class="log-out" value="LOGOUT">
+            </div>
+        </div>
+        <!--聊天框主体-->
+        <div class="chat-body">
+            <!--聊天框左侧-->
+            <div class="chat-body-left">
+                <!--聊天框左侧聊天内容-->
+                <div class="chat-content"></div>
+                <!--聊天框左侧聊天输入框-->
+                <div class="chat-edit">
+                    <input type="text" class="edit-box" placeholder="Please Type You Message" maxlength="255">
+                    <input type="button" class="edit-button" value="SEND">
+                </div>
+            </div>
+            <!--聊天框右上侧-->
+            <div style="height: 100%;width: 30%;margin-right: 5px;">
+                <div class="chat-body-right">
+                    <!--聊天框右侧统计人数-->
+                    <!-- <div class="online-count">Online:0</div> -->
+                    <!--聊天框右侧用户名-->
+                    <div class="user-name">user-name</div>
+                    <!--聊天框右侧头像-->
+                    <img class="user-img" />
+                </div>
+                <!--聊天框右下侧-->
+                <div class="chat-body-bottom">
+                    <!--聊天框右侧在线用户-->
+                    <div class="online-user-count">在线用户(0)</div>
+                    <!--聊天框右侧用户名-->
+                    <div class="online-user-name">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="js/socket.io.js"></script>
+<script src="js/index.js"></script>
+<script src="dist/jquery.min.js"></script>
+
+</html>

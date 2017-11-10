@@ -3,59 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>聊天室</title>
-    <link rel="stylesheet" href="css/index.css">
+    <title>login</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
-    <div class="chat-box">
-        <!--聊天框头部-->
-        <div class="chat-header">
-            <div class="button-box">
-                <input type="button" class="log-out" value="LOGOUT">
+    <div class="login-box flex-box">
+        <!--登录标题栏-->
+        <h2 class="sign-title box-width">LOGIN</h2>
+        <!--头像栏-->
+        <div class="picture-carousel">
+            <div class="arrow left-arrow">
+                <div class="before-arrow"></div>
+            </div>
+            <img class="p1 img-setting" src="img/1.png" alt="1.png">
+            <img class="p2 img-setting" src="img/2.png" alt="2.png">
+            <img class="p3 img-setting" src="img/3.png" alt="3.png">
+            <img class="p2 img-setting" src="img/4.png" alt="4.png">
+            <img class="p1 img-setting" src="img/5.png" alt="5.png">
+            <div class="arrow right-arrow">
+                <div class="after-arrow"></div>
             </div>
         </div>
-        <!--聊天框主体-->
-        <div class="chat-body">
-            <!--聊天框左侧-->
-            <div class="chat-body-left">
-                <!--聊天框左侧聊天内容-->
-                <div class="chat-content"></div>
-                <!--聊天框左侧聊天输入框-->
-                <div class="chat-edit">
-                    <input type="text" class="edit-box" placeholder="Please Type You Message" maxlength="255">
-                    <input type="button" class="edit-button" value="SEND">
-                </div>
-            </div>
-            <!--聊天框右上侧-->
-            <div style="height: 100%;width: 30%;margin-right: 5px;">
-                <div class="chat-body-right">
-                    <!--聊天框右侧统计人数-->
-                    <!-- <div class="online-count">Online:0</div> -->
-                    <!--聊天框右侧用户名-->
-                    <div class="user-name">user-name</div>
-                    <!--聊天框右侧头像-->
-                    <img class="user-img" />
-                </div>
-                <!--聊天框右下侧-->
-                <div class="chat-body-bottom">
-                    <!--聊天框右侧在线用户-->
-                    <div class="online-user-count">在线用户(0)</div>
-                    <!--聊天框右侧用户名-->
-                    <div class="online-user-name">
+        <!--用户名栏-->
+        <div class="name-box box-width">
+            <input type="text" class="user-name box-width" placeholder="请输入昵称">
+        </div>
+        <br>
+        <!--手机号栏-->
+        <div class="name-box box-width">
+            <input type="text" class="user-mobile box-width" placeholder="请输入手机号">
+        </div>
 
-                    </div>
-
-                </div>
-            </div>
+        <!--确认栏-->
+        <div class="button-box box-width">
+            <input type="button" class="login-button box-width" value="登录">
+        </div>
+        <!--错误信息栏-->
+        <div class="error-box box-width">
+            <span class="error-message">手机号将于昵称绑定！</span>
         </div>
     </div>
 </body>
-
-<script src="js/socket.io.js"></script>
-<script src="js/index.js"></script>
+<script src="js/login.js"></script>
 <script src="dist/jquery.min.js"></script>
 
 </html>

@@ -60,7 +60,7 @@ loginButton.addEventListener('click', function() {
     // } 
     else {
         window.location.href =
-            encodeURI('index.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
+            encodeURI('server.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
                 '&username=' + userName.value + '&usermobile=' + userMobile.value);
     }
 });

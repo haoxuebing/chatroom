@@ -65,24 +65,29 @@ socket.on('message', function(information) {
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function(result) {
-    onlineCount.innerHTML = '在线用户:' + result.onlineCount;
+socket.on('connected', function(onlineUsers) {
+    onlineCount.innerHTML = '在线用户:' + onlineUsers.length;
 
     var text = document.createElement('p');
-    text.id = result.id;
-    text.innerHTML = result.userName;
+    text.id = onlineUsers.id;
+    text.innerHTML = onlineUsers.userName;
     onlineUsers.appendChild(text);
     onlineUsers.scrollTop = onlineUsers.scrollHeight;
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function(result) {
-    onlineCount.innerHTML = '在线用户:' + result.onlineCount;
+socket.on('disconnected', function(onlineUsers) {
+    onlineCount.innerHTML = '在线用户:' + onlineUsers.length;
 
     //去掉下线用户
     var oldChild = document.getElementById(result.id);
     onlineUsers.removeChild(oldChild);
+
 });
+
+function nowOnlineUsers() {
+
+}
 
 // 发送本机的消息
 function sendMessage() {
