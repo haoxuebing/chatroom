@@ -294,6 +294,12 @@ body {
     overflow: scroll;
 }
 
+.marCls{
+    color: #79C2EA;
+    font-weight: bold;
+    margin-top: 5px;
+    font-size: 14px;
+}
 
 /*兼容小屏幕*/
 
