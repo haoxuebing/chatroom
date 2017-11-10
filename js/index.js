@@ -139,16 +139,13 @@ function createMyMessage() {
     chatContent.appendChild(myMessageBox);
 
     chatContent.scrollTop = chatContent.scrollHeight;
+    document.head.getElementsByTagName("title")[0].innerHTML = '聊天室';
 }
 
 // 生成其他用户的聊天气泡
 function createOtherMessage(information) {
     var otherMessageBox = document.createElement('div');
     otherMessageBox.className = 'other-message-box';
-
-
-    // var timeHtml = '<div align="center">'+information.time+'</div>';
-    // otherMessageBox.appendChild(timeHtml);
 
     var otherUserInformation = document.createElement('div');
     otherUserInformation.className = 'other-user-information';
@@ -184,7 +181,7 @@ function createOtherMessage(information) {
     chatContent.scrollTop = chatContent.scrollHeight;
     //title提示
     notification(information.chatContent);
-    document.head.getElementsByTagName("title")[0].innerHTML = '聊天室';
+    
 }
 
 function notification(title) {
