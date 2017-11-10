@@ -18,7 +18,7 @@ var loginButton = document.getElementsByClassName('login-button')[0];
 var errorMessage = document.getElementsByClassName('error-message')[0];
 
 // 添加左箭头监听事件
-leftArrow.addEventListener('click', function () {
+leftArrow.addEventListener('click', function() {
     imgArray.unshift(imgArray[imgArray.length - 1]); //把最后的元素放在第一位
     imgArray.pop();
     carouselImg();
@@ -26,7 +26,7 @@ leftArrow.addEventListener('click', function () {
 });
 
 // 添加右箭头监听事件
-rightArrow.addEventListener('click', function () {
+rightArrow.addEventListener('click', function() {
     imgArray.push(imgArray[0]); //把第一个元素放在最后
     imgArray.shift();
     carouselImg();
@@ -42,7 +42,7 @@ function carouselImg() {
 };
 
 // 添加登录按钮监听事件
-loginButton.addEventListener('click', function () {
+loginButton.addEventListener('click', function() {
 
     if (userName.value === '') {
         errorMessage.innerHTML = '请输入昵称';
@@ -50,13 +50,15 @@ loginButton.addEventListener('click', function () {
     } else if (userName.value.length > 8) {
         errorMessage.innerHTML = '昵称不能超过8位';
         errorMessage.style.visibility = 'visible';
-    } else if (userMobile.value === '') {
-        errorMessage.innerHTML = '请输入手机号';
-        errorMessage.style.visibility = 'visible';
-    } else if (userMobile.value.length != 11) {
-        errorMessage.innerHTML = '手机号错误';
-        errorMessage.style.visibility = 'visible';
-    } else {
+    }
+    // else if (userMobile.value === '') {
+    //     errorMessage.innerHTML = '请输入手机号';
+    //     errorMessage.style.visibility = 'visible';
+    // } else if (userMobile.value.length != 11) {
+    //     errorMessage.innerHTML = '手机号错误';
+    //     errorMessage.style.visibility = 'visible';
+    // } 
+    else {
         window.location.href =
             encodeURI('index.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
                 '&username=' + userName.value + '&usermobile=' + userMobile.value);
@@ -64,7 +66,7 @@ loginButton.addEventListener('click', function () {
 });
 
 // Enter按键绑定登录事件
-document.onkeydown = function (event) {
+document.onkeydown = function(event) {
     var e = event || window.event;
     if (e && e.keyCode == 13) {
         loginButton.click();

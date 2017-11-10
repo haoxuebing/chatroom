@@ -187,7 +187,9 @@ body {
     text-align: center;
 }
 
+
 /*聊天输入框*/
+
 .chat-edit {
     margin-top: 5px;
     display: flex;
@@ -196,7 +198,10 @@ body {
     box-shadow: 1px 1px 15px #7B8C99;
     overflow: hidden;
 }
+
+
 /*聊天输入框输入区域*/
+
 .edit-box {
     width: 80%;
     height: 100%;
@@ -205,7 +210,9 @@ body {
     outline: none;
 }
 
+
 /*聊天框输入按钮*/
+
 .edit-button {
     height: 100%;
     padding: 5px 15px;
@@ -234,7 +241,7 @@ body {
     box-shadow: 1px 1px 15px #7B8C99;
 }
 
-.chat-body-bottom{
+.chat-body-bottom {
     height: 57%;
     width: 100%;
     display: flex;
@@ -257,8 +264,9 @@ body {
 }
 
 .user-img {
-    width: 100px;
-    height: 100px;
+    width: 70%;
+    /* width: 100px;
+    height: 100px; */
     margin: 5px;
 }
 
@@ -268,14 +276,14 @@ body {
     color: #79C2EA;
 }
 
-.online-user-count{
+.online-user-count {
     position: relative;
     font-size: 18px;
     font-weight: bold;
     color: #79C2EA;
 }
 
-.online-user-name{
+.online-user-name {
     height: 70%;
     margin: 15px;
     font-size: 18px;
@@ -288,6 +296,7 @@ body {
 
 
 /*兼容小屏幕*/
+
 @media screen and (max-width: 420px) {
     .chat-box {
         width: 50%;
@@ -306,6 +315,6 @@ body {
         margin: 5px;
     }
     .chat-body-right {
-        display: none;
+        /* display: none; */
     }
 }
