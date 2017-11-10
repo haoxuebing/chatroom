@@ -17,7 +17,7 @@ var userName = document.getElementsByClassName('user-name')[0];
 var onlineCount = document.getElementsByClassName('online-user-count')[0];
 
 // 在线用户框
-var onlineUsers= document.getElementsByClassName('online-user-name')[0];
+var onlineUsers = document.getElementsByClassName('online-user-name')[0];
 
 // 把登录页面的名称放在右侧
 userName.innerHTML = url[1].split('=')[1];
@@ -34,7 +34,7 @@ editButton.addEventListener('click', sendMessage);
 logOut.addEventListener('click', closePage);
 
 // 绑定Enter键和发送事件
-document.onkeydown = function (event) {
+document.onkeydown = function(event) {
     var e = event || window.event;
     if (e && e.keyCode === 13) {
         if (editBox.value !== '') {
@@ -58,29 +58,29 @@ function closePage() {
 var socket = io();
 
 // 当接收到消息并且不是本机时生成聊天气泡
-socket.on('message', function (information) {
+socket.on('message', function(information) {
     if (information.name !== userName.textContent) {
         createOtherMessage(information);
     }
 });
 
 // 当接收到有人连接进来
-socket.on('connected', function (result) {
+socket.on('connected', function(result) {
     onlineCount.innerHTML = '在线用户:' + result.onlineCount;
 
     var text = document.createElement('p');
-    text.id=result.id;
+    text.id = result.id;
     text.innerHTML = result.userName;
     onlineUsers.appendChild(text);
     onlineUsers.scrollTop = onlineUsers.scrollHeight;
 });
 
 // 当接收到有人断开后
-socket.on('disconnected', function (result) {
+socket.on('disconnected', function(result) {
     onlineCount.innerHTML = '在线用户:' + result.onlineCount;
 
     //去掉下线用户
-    var oldChild=document.getElementById(result.id);
+    var oldChild = document.getElementById(result.id);
     onlineUsers.removeChild(oldChild);
 });
 
@@ -177,4 +177,25 @@ function createOtherMessage(information) {
     chatContent.appendChild(otherMessageBox);
 
     chatContent.scrollTop = chatContent.scrollHeight;
+    //title提示
+    notification(information.chatContent);
+}
+
+function notification(title) {
+    var timer;
+    return function(timer) {
+        var index = 0;
+        clearInterval(timer);
+        timer = setInterval(function() {
+            if (index % 2) {
+                document.head.getElementsByTagName("title")[0].innerHTML = '【　　　】' + title;
+            } else {
+                document.head.getElementsByTagName("title")[0].innerHTML = '【新消息】' + title;
+            }
+            index++;
+            if (index > 10) {
+                clearInterval(timer);
+            }
+        }, 500);
+    }(timer);
 }
