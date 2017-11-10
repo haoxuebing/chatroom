@@ -179,6 +179,7 @@ function createOtherMessage(information) {
     chatContent.scrollTop = chatContent.scrollHeight;
     //title提示
     notification(information.chatContent);
+    document.head.getElementsByTagName("title")[0].innerHTML = '聊天室';
 }
 
 function notification(title) {
