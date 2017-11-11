@@ -50,7 +50,7 @@ io.on('connection', function(socket) {
                 id: socket.id,
                 userName: query.username
             }
-            onlineUsers.shift(onlineUsers.myIndexOf(user), 1);
+            onlineUsers.delUser(user);
 
             // 发送给客户端断在线人数
             io.emit('disconnected', onlineUsers);
@@ -75,6 +75,31 @@ Array.prototype.myIndexOf = function(val) {
         if (this[i].id == val.id) return i;
     }
     return -1;
+};
+
+Array.prototype.delUser=function(_obj) {
+    var length = this.length;
+    for(var i = 0; i < length; i++)
+    {
+        if(this[i].id == _obj.id)
+        {
+            if(i == 0)
+            {
+                this.shift(); //删除并返回数组的第一个元素
+                return;
+            }
+            else if(i == length-1)
+            {
+                this.pop();  //删除并返回数组的最后一个元素
+                return;
+            }
+            else
+            {
+                this.splice(i,1); //删除下标为i的元素
+                return;
+            }
+        }
+    }
 };
 
 var server = http.listen(4000, function() {
