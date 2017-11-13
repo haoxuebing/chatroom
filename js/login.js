@@ -61,7 +61,7 @@ loginButton.addEventListener('click', function() {
     else {
         window.location.href =
             encodeURI('server.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
-                '&username=' + userName.value + '&usermobile=1' + ); //userMobile.value
+                '&username=' + userName.value + '&usermobile=1'); //+userMobile.value
     }
 });
 
