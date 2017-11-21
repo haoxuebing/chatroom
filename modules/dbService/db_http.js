@@ -21,7 +21,7 @@ function InsertSocket(socket, status, cb) {
     var headPic = userinfo.selectpicture;
     var userName = userinfo.username;
     var userMobile = userinfo.usermobile;
-    var userAddress = socket.client.conn.remoteAddress; //socket.handshake.address;
+    var userAddress = socket.handshake.address; //socket.client.conn.remoteAddress;
 
     var postyData = {
         CreatedTime: new Date().toLocaleString(),
