@@ -4,7 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
-var querystring = require('querystring')
+var querystring = require('querystring');
 var db_http = require('./modules/dbService/db_http');
 
 // 在线人数统计
@@ -77,25 +77,18 @@ Array.prototype.myIndexOf = function(val) {
     return -1;
 };
 
-Array.prototype.delUser=function(_obj) {
+Array.prototype.delUser = function(_obj) {
     var length = this.length;
-    for(var i = 0; i < length; i++)
-    {
-        if(this[i].id == _obj.id)
-        {
-            if(i == 0)
-            {
+    for (var i = 0; i < length; i++) {
+        if (this[i].id == _obj.id) {
+            if (i == 0) {
                 this.shift(); //删除并返回数组的第一个元素
                 return;
-            }
-            else if(i == length-1)
-            {
-                this.pop();  //删除并返回数组的最后一个元素
+            } else if (i == length - 1) {
+                this.pop(); //删除并返回数组的最后一个元素
                 return;
-            }
-            else
-            {
-                this.splice(i,1); //删除下标为i的元素
+            } else {
+                this.splice(i, 1); //删除下标为i的元素
                 return;
             }
         }

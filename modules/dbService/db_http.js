@@ -1,5 +1,6 @@
 // var Thenjs = require('thenjs');
 var dbbase = require('./db_base');
+var querystring = require('querystring');
 
 function InsertHttp(req, res, cb) {
     var postyData = {
@@ -16,11 +17,11 @@ function InsertHttp(req, res, cb) {
 }
 
 function InsertSocket(socket, status, cb) {
-    var userinfo = socket.handshake.headers.referer.split('?')[1].split('&');
-    var headPic = userinfo[0].split('=')[1];
-    var userName = userinfo[1].split('=')[1];
-    var userMobile = userinfo[2].split('=')[1];
-    var userAddress = socket.handshake.address;
+    var userinfo = querystring.parse(socket.handshake.headers.referer.split('?')[1]);
+    var headPic = userinfo.selectpicture;
+    var userName = userinfo.username;
+    var userMobile = userinfo.usermobile;
+    var userAddress = socket.client.conn.remoteAddress; //socket.handshake.address;
 
     var postyData = {
         CreatedTime: new Date().toLocaleString(),
@@ -28,7 +29,7 @@ function InsertSocket(socket, status, cb) {
         UserMobile: userMobile,
         HeadPicture: headPic,
         UserAddress: userAddress,
-        UserAgent: JSON.stringify(socket.handshake.headers).split('user-agent":"')[1],
+        UserAgent: socket.handshake.headers['user-agent'],
         Status: status
     };
     dbbase.query('insert into ChatUsers set ?', postyData, cb);
