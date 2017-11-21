@@ -23,7 +23,7 @@ function InsertSocket(socket, status, cb) {
     var userMobile = userinfo.usermobile;
     var userAddress = socket.handshake.address; //socket.client.conn.remoteAddress;
 
-    console.log(socket + '\n');
+    console.log(socket.client.conn.remoteAddress + '||' + socket.handshake.address + '\n');
 
     var postyData = {
         CreatedTime: new Date().toLocaleString(),
