@@ -20,10 +20,8 @@ function InsertSocket(socket, status, cb) {
     var userinfo = querystring.parse(socket.handshake.headers.referer.split('?')[1]);
     var headPic = userinfo.selectpicture;
     var userName = userinfo.username;
-    var userMobile = userinfo.usermobile;
-    var userAddress = socket.handshake.address; //socket.client.conn.remoteAddress;
-
-    console.log(socket.client.conn.remoteAddress + '||' + socket.handshake.address + '\n');
+    var userMobile = userinfo.usermobile || '1';
+    var userAddress = userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
 
     var postyData = {
         CreatedTime: new Date().toLocaleString(),

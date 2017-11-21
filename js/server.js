@@ -77,8 +77,8 @@ socket.on('disconnected', function(result) {
 });
 
 function nowOnlineUsers(users) {
-    onlineUsers.innerHTML='';
-    if(users.length>0){
+    onlineUsers.innerHTML = '';
+    if (users.length > 0) {
         users.forEach(function(user) {
             var text = document.createElement('p');
             text.id = user.id;
@@ -181,7 +181,7 @@ function createOtherMessage(information) {
     chatContent.scrollTop = chatContent.scrollHeight;
     //title提示
     notification(information.chatContent);
-    
+
 }
 
 function notification(title) {
