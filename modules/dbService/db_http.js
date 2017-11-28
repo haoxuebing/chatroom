@@ -21,9 +21,9 @@ function InsertSocket(socket, status, cb) {
     var headPic = userinfo.selectpicture;
     var userName = userinfo.username;
     var userMobile = userinfo.usermobile || '1';
-    var userAddress = userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
+    var userAddress = socket.handshake.headers['x-real-ip'] || userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
 
-    console.log(socket.handshake.address + '||' + socket.client.conn.remoteAddress + '\n');
+    console.log(socket.handshake.headers['x-real-ip'] + '||' + socket.client.conn.remoteAddress + '\n');
 
     var postyData = {
         CreatedTime: new Date().toLocaleString(),
