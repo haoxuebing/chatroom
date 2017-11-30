@@ -4,6 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var favicon = require('serve-favicon');
 var querystring = require('querystring');
 var db_http = require('./modules/dbService/db_http');
 
@@ -13,6 +14,7 @@ var onlineCount = 0;
 var onlineUsers = [];
 
 app.use(express.static(__dirname));
+app.use(favicon('favicon.ico'));
 
 // 路径映射
 app.get('/', function(request, response) {
