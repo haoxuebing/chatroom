@@ -5,7 +5,8 @@ var favicon = require('serve-favicon');
 var session = require('express-session');
 // var bodyParser = require('body-parser');
 
-app.use(express.static(process.cwd()));
+//process.cwd()
+app.use(express.static(path.join('public')));
 app.use(favicon('favicon.ico'));
 
 // view engine setup
@@ -31,7 +32,7 @@ app.use(session({
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use(express.static(path.join('public')));
+
 
 var index = require('./index');
 app.use('/', index);
