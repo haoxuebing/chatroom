@@ -1,102 +1,51 @@
 // 引入必须模块
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
-var favicon = require('serve-favicon');
-var querystring = require('querystring');
-var db_http = require('./modules/dbService/db_http');
+var http = require('http');
+var app = require('./routes/routeRegister');
+// var favicon = require('serve-favicon');
+// var path = require('path');
 
-// 在线人数统计
-var onlineCount = 0;
-//在线用户
-var onlineUsers = [];
 
-app.use(express.static(__dirname));
-app.use(favicon('favicon.ico'));
+// app.use(express.static(__dirname));
+// app.use(favicon('favicon.ico'));
+// app.set('views', path.join('views'));
 
 // 路径映射
-app.get('/', function(request, response) {
-    response.sendFile('index.html');
+// router.get('/server', function(req, res) {
+//     res.sendFile(__dirname + '/views/server.html');
+// });
+
+// router.get('/*', function(req, res) {
+//     res.sendFile(__dirname + '/views/index.html');
+// });
+
+
+// app.use('/', router);
+
+var port = 4000;
+// app.set('port', port);
+
+var server = http.createServer(app);
+server.listen(port);
+
+server.on('error', function(error) {
+    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 });
 
-
-// 当有用户连接进来时
-io.on('connection', function(socket) {
-
-    db_http.InsertSocket(socket, 1, function(err, rlt) {
-        console.log('a user connected');
-
-        var query = querystring.parse(socket.handshake.headers.referer);
-
-        var user = {
-            id: socket.id,
-            userName: query.username
-        }
-        onlineUsers.push(user);
-
-        // 发送给客户端在线人数
-        io.emit('connected', onlineUsers);
-    });
-
-
-    // 当有用户断开
-    socket.on('disconnect', function() {
-
-        db_http.InsertSocket(socket, 0, function(err, rlt) {
-            console.log('user disconnected');
-
-            var query = querystring.parse(socket.handshake.headers.referer);
-            var user = {
-                id: socket.id,
-                userName: query.username
-            }
-            onlineUsers.delUser(user);
-
-            // 发送给客户端断在线人数
-            io.emit('disconnected', onlineUsers);
-            console.log(onlineCount);
-        });
-
-    });
-
-    // 收到了客户端发来的消息
-    socket.on('message', function(message) {
-        // 给客户端发送消息
-        db_http.InsertMessage(message, function(err, rlt) {
-            console.log(JSON.stringify(message));
-            io.emit('message', message);
-        })
-    });
-
-});
-
-Array.prototype.myIndexOf = function(val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i].id == val.id) return i;
-    }
-    return -1;
-};
-
-Array.prototype.delUser = function(_obj) {
-    var length = this.length;
-    for (var i = 0; i < length; i++) {
-        if (this[i].id == _obj.id) {
-            if (i == 0) {
-                this.shift(); //删除并返回数组的第一个元素
-                return;
-            } else if (i == length - 1) {
-                this.pop(); //删除并返回数组的最后一个元素
-                return;
-            } else {
-                this.splice(i, 1); //删除下标为i的元素
-                return;
-            }
-        }
-    }
-};
-
-var server = http.listen(4000, function() {
+server.on('listening', function() {
     console.log('Sever is running');
 });
+
+var socket = require('./modules/socket');
+socket.listen(server);

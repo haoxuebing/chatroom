@@ -60,7 +60,7 @@ loginButton.addEventListener('click', function() {
     // }
     else {
         window.location.href =
-            encodeURI('server.html?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
+            encodeURI('/server?selectpicture=' + document.getElementsByClassName('p3')[0].alt +
                 '&username=' + userName.value); //+ '&remoteIP=' + returnCitySN["cip"] //&usermobile=+userMobile.value
     }
 });
