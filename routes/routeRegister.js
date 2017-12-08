@@ -3,7 +3,6 @@ var app = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var session = require('express-session');
-// var bodyParser = require('body-parser');
 
 //process.cwd()
 app.use(express.static(path.join('public')));
@@ -13,9 +12,6 @@ app.use(favicon('favicon.ico'));
 app.set('views', path.join('views'));
 app.set('view engine', 'ejs');
 
-// app.use(require('body-parser').urlencoded({
-//     extended: true
-// }));
 app.use(require('cookie-parser')());
 app.use(session({
     secret: 'secret', //secret值可以任意，但不能为空
@@ -26,13 +22,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-
-// app.use(favicon(path.join('public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-
-
 
 var index = require('./index');
 app.use('/', index);
