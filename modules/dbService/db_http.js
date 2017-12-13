@@ -1,6 +1,10 @@
 // var Thenjs = require('thenjs');
+var Client = require('node-rest-client').Client;
+var client = new Client();
+var iconv = require('iconv-lite');
 var dbbase = require('./db_base');
 var querystring = require('querystring');
+const whois = 'http://whois.pconline.com.cn/ip.jsp?ip=';
 
 function InsertHttp(req, res, cb) {
     var postyData = {
@@ -21,20 +25,26 @@ function InsertSocket(socket, status, cb) {
     var headPic = userinfo.selectpicture;
     var userName = userinfo.username;
     var userMobile = userinfo.usermobile || '1';
-    var userAddress = socket.handshake.headers['x-real-ip'] || userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
-
+    var userIP = socket.handshake.headers['x-real-ip'] || userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
     console.log(socket.handshake.headers['x-real-ip'] + '||' + socket.client.conn.remoteAddress + '\n');
 
-    var postyData = {
-        CreatedTime: new Date().toLocaleString(),
-        UserName: decodeURI(userName),
-        UserMobile: userMobile,
-        HeadPicture: headPic,
-        UserAddress: userAddress,
-        UserAgent: socket.handshake.headers['user-agent'],
-        Status: status
-    };
-    dbbase.query('insert into ChatUsers set ?', postyData, cb);
+    client.get(whois + userIP, function(data) {
+        var userAddress = iconv.decode(data, 'gbk').replace(/(^\s*)|(\s*$)/g, "") || '未知地址';
+        var postyData = {
+            CreatedTime: new Date().toLocaleString(),
+            UserName: decodeURI(userName),
+            UserMobile: userMobile,
+            HeadPicture: headPic,
+            UserIP: userIP,
+            UserAddress: userAddress,
+            UserAgent: socket.handshake.headers['user-agent'],
+            Status: status
+        };
+        dbbase.query('insert into ChatUsers set ?', postyData, cb);
+    })
+
+
+
 }
 
 function InsertMessage(message, cb) {

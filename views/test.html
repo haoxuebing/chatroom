@@ -1,0 +1,18 @@
+<html>
+
+<head>
+    <title>TestJson</title>
+    <script src="../public/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <span id="idTestJson"></span><br/>
+</body>
+<script>
+    function jsShow(obj) {
+        $('#idTestJson').text(JSON.stringify(obj));
+    }
+</script>
+<script src="http://whois.pconline.com.cn/ipJson.jsp?callback=jsShow"></script>
+
+</html>
