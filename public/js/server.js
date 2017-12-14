@@ -19,6 +19,8 @@ var onlineCount = document.getElementsByClassName('online-user-count')[0];
 // 在线用户框
 var onlineUsers = document.getElementsByClassName('online-user-name')[0];
 
+var firstLoad = 1;
+
 // 把登录页面的名称放在右侧
 userName.innerHTML = url[1].split('=')[1];
 var userImg = document.getElementsByClassName('user-img')[0];
@@ -66,7 +68,10 @@ socket.on('message', function(information) {
 
 // 初次进入加载最新5条消息
 socket.on('messages', function(informations) {
-    createOtherMessages(informations);
+    if (firstLoad) {
+        firstLoad = 0;
+        createOtherMessages(informations);
+    }
 });
 
 // 当接收到有人连接进来
@@ -157,6 +162,7 @@ function createOtherMessages(informations) {
             createOtherMessage(informations[item]);
         }
     }
+
 }
 
 // 生成其他用户的聊天气泡
