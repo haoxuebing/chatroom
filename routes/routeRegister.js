@@ -31,12 +31,12 @@ app.use(session({
 
 var index = require('./index');
 app.use('/', function(req, res, next) {
-    var ip = req.headers['x-real-ip'] + '||' + req.connection.remoteAddress;
-    var url = 'http://whois.pconline.com.cn/ip.jsp?ip=' + ip;
-    client.get(url, function(data) {
-        var strJson = iconv.decode(data, 'gbk').replace(/(^\s*)|(\s*$)/g, "");
-        console.log(ip + '||' + strJson);
-    })
+    // var ip = req.headers['x-real-ip'] + '||' + req.connection.remoteAddress;
+    // var url = 'http://whois.pconline.com.cn/ip.jsp?ip=' + ip;
+    // client.get(url, function(data) {
+    //     var strJson = iconv.decode(data, 'gbk').replace(/(^\s*)|(\s*$)/g, "");
+    //     console.log(ip + '||' + strJson);
+    // })
     next();
 
     // http.get(url, function(res) {

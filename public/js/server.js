@@ -64,6 +64,11 @@ socket.on('message', function(information) {
     }
 });
 
+// 初次进入加载最新5条消息
+socket.on('messages', function(informations) {
+    createOtherMessages(informations);
+});
+
 // 当接收到有人连接进来
 socket.on('connected', function(result) {
     onlineCount.innerHTML = '在线用户:' + result.length;
@@ -140,6 +145,14 @@ function createMyMessage() {
 
     chatContent.scrollTop = chatContent.scrollHeight;
     document.head.getElementsByTagName("title")[0].innerHTML = '聊天室';
+}
+
+
+function createOtherMessages(informations) {
+    for (var item in informations) {
+        createOtherMessage(informations[item]);
+    }
+
 }
 
 // 生成其他用户的聊天气泡
