@@ -19,7 +19,6 @@ app.get('/*', function(req, res) {
     res.render('index', {
         errorMsg: ''
     });
-    //res.sendFile(process.cwd() + '/views/index.html');
 });
 
 

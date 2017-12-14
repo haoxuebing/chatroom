@@ -47,10 +47,10 @@ document.onkeydown = function(event) {
 function closePage() {
     var userAgent = navigator.userAgent;
     if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") != -1) {
-        window.location.href = "http://www.chuangzaojie.com:3000";
+        window.location.href = "http://chat.luckybing.top";
     } else {
         window.opener = null;
-        window.open("http://www.chuangzaojie.com:3000", "_self");
+        window.open("http://chat.luckybing.top", "_self");
         window.close();
     }
 }
@@ -100,24 +100,25 @@ function sendMessage() {
         var myInformation = {
             name: userName.textContent,
             chatContent: editBox.value,
-            img: userImg.src
+            img: userImg.src,
+            createdTime: new Date().toLocaleString()
         };
         socket.emit('message', myInformation);
-        createMyMessage();
+        createMyMessage(myInformation);
         editBox.value = '';
     }
 
 };
 
 // 生成本机的聊天气泡
-function createMyMessage() {
+function createMyMessage(myInformation) {
     var myMessageBox = document.createElement('div');
     myMessageBox.className = 'my-message-box';
 
     var messageContent = document.createElement('div');
     messageContent.className = 'message-content';
     var text = document.createElement('span');
-    text.innerHTML = editBox.value;
+    text.innerHTML = editBox.value || myInformation.chatContent;
     messageContent.appendChild(text);
     myMessageBox.appendChild(messageContent);
 
@@ -139,7 +140,7 @@ function createMyMessage() {
 
     var timeBox = document.createElement('div');
     timeBox.align = 'center';
-    timeBox.innerHTML = new Date().toLocaleString();
+    timeBox.innerHTML = myInformation.createdTime;
     chatContent.appendChild(timeBox);
     chatContent.appendChild(myMessageBox);
 
@@ -150,9 +151,12 @@ function createMyMessage() {
 
 function createOtherMessages(informations) {
     for (var item in informations) {
-        createOtherMessage(informations[item]);
+        if (informations[item].name == userName.textContent) {
+            createMyMessage(informations[item]);
+        } else {
+            createOtherMessage(informations[item]);
+        }
     }
-
 }
 
 // 生成其他用户的聊天气泡
@@ -186,7 +190,7 @@ function createOtherMessage(information) {
 
     var timeBox = document.createElement('div');
     timeBox.align = 'center';
-    timeBox.innerHTML = new Date().toLocaleString();
+    timeBox.innerHTML = information.createdTime;
     chatContent.appendChild(timeBox);
 
     chatContent.appendChild(otherMessageBox);

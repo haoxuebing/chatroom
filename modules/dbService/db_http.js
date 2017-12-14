@@ -31,10 +31,10 @@ function InsertChatUser(userinfo, status, cb) {
 function InsertMessage(message, cb) {
 
     var postyData = {
-        CreatedTime: new Date().toLocaleString(),
+        CreatedTime: message.createdTime, //new Date().toLocaleString(),
         UserName: message.name,
         Message: message.chatContent,
-        HeadPicture: '/img/' + message.img
+        HeadPicture: message.img
     };
     dbbase.query('insert into ChatMessage set ?', postyData, cb);
 }
@@ -54,7 +54,7 @@ function CheckUserName(req, cb) {
 }
 
 function GetNewMsgs(cb) {
-    dbbase.query('SELECT UserName AS `name`,Message AS chatContent,HeadPicture AS img FROM ChatMessage ORDER BY CreatedTime DESC LIMIT 5;', cb);
+    dbbase.query('SELECT UserName AS `name`,Message AS chatContent,HeadPicture AS img,CreatedTime as createdTime FROM ChatMessage ORDER BY Id DESC LIMIT 5;', cb);
 }
 
 module.exports = {

@@ -69,6 +69,7 @@ exports.listen = function(server) {
         // 收到了客户端发来的消息
         socket.on('message', function(message) {
             // 给客户端发送消息
+            message.createdTime = new Date().toLocaleString();
             db_http.InsertMessage(message, function(err, rlt) {
                 console.log(JSON.stringify(message));
                 io.emit('message', message);
