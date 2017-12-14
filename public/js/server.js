@@ -150,7 +150,7 @@ function createMyMessage(myInformation) {
 
 
 function createOtherMessages(informations) {
-    for (var item in informations) {
+    for (var item = informations.length - 1; item >= 0; item--) {
         if (informations[item].name == userName.textContent) {
             createMyMessage(informations[item]);
         } else {
