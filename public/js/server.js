@@ -19,6 +19,8 @@ var onlineCount = document.getElementsByClassName('online-user-count')[0];
 // 在线用户框
 var onlineUsers = document.getElementsByClassName('online-user-name')[0];
 
+var firstLoad = 1;
+
 // 把登录页面的名称放在右侧
 userName.innerHTML = url[1].split('=')[1];
 var userImg = document.getElementsByClassName('user-img')[0];
@@ -47,10 +49,10 @@ document.onkeydown = function(event) {
 function closePage() {
     var userAgent = navigator.userAgent;
     if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Chrome") != -1) {
-        window.location.href = "http://www.chuangzaojie.com:3000";
+        window.location.href = "http://chat.luckybing.top";
     } else {
         window.opener = null;
-        window.open("http://www.chuangzaojie.com:3000", "_self");
+        window.open("http://chat.luckybing.top", "_self");
         window.close();
     }
 }
@@ -61,6 +63,14 @@ var socket = io();
 socket.on('message', function(information) {
     if (information.name !== userName.textContent) {
         createOtherMessage(information);
+    }
+});
+
+// 初次进入加载最新5条消息
+socket.on('messages', function(informations) {
+    if (firstLoad) {
+        firstLoad = 0;
+        createOtherMessages(informations);
     }
 });
 
@@ -95,24 +105,25 @@ function sendMessage() {
         var myInformation = {
             name: userName.textContent,
             chatContent: editBox.value,
-            img: userImg.src
+            img: userImg.src,
+            createdTime: new Date().toLocaleString()
         };
         socket.emit('message', myInformation);
-        createMyMessage();
+        createMyMessage(myInformation);
         editBox.value = '';
     }
 
 };
 
 // 生成本机的聊天气泡
-function createMyMessage() {
+function createMyMessage(myInformation) {
     var myMessageBox = document.createElement('div');
     myMessageBox.className = 'my-message-box';
 
     var messageContent = document.createElement('div');
     messageContent.className = 'message-content';
     var text = document.createElement('span');
-    text.innerHTML = editBox.value;
+    text.innerHTML = editBox.value || myInformation.chatContent;
     messageContent.appendChild(text);
     myMessageBox.appendChild(messageContent);
 
@@ -134,12 +145,24 @@ function createMyMessage() {
 
     var timeBox = document.createElement('div');
     timeBox.align = 'center';
-    timeBox.innerHTML = new Date().toLocaleString();
+    timeBox.innerHTML = myInformation.createdTime;
     chatContent.appendChild(timeBox);
     chatContent.appendChild(myMessageBox);
 
     chatContent.scrollTop = chatContent.scrollHeight;
     document.head.getElementsByTagName("title")[0].innerHTML = '聊天室';
+}
+
+
+function createOtherMessages(informations) {
+    for (var item = informations.length - 1; item >= 0; item--) {
+        if (informations[item].name == userName.textContent) {
+            createMyMessage(informations[item]);
+        } else {
+            createOtherMessage(informations[item]);
+        }
+    }
+
 }
 
 // 生成其他用户的聊天气泡
@@ -173,7 +196,7 @@ function createOtherMessage(information) {
 
     var timeBox = document.createElement('div');
     timeBox.align = 'center';
-    timeBox.innerHTML = new Date().toLocaleString();
+    timeBox.innerHTML = information.createdTime;
     chatContent.appendChild(timeBox);
 
     chatContent.appendChild(otherMessageBox);

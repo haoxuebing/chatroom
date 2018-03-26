@@ -23,7 +23,6 @@ function mysqlPools() {
         data = arguments[1];
         callback = arguments[2];
     }
-
     console.log('Print SQL:' + arguments[0] + JSON.stringify(data));
     pools.query(arguments[0], data, function(error, results, fields) {
         if (error) throw error;

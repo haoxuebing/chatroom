@@ -1,4 +1,8 @@
 // var Thenjs = require('thenjs');
+var Client = require('node-rest-client').Client;
+var client = new Client();
+const whois = 'http://whois.pconline.com.cn/ip.jsp?ip=';
+var iconv = require('iconv-lite');
 var dbbase = require('./db_base');
 var querystring = require('querystring');
 
@@ -16,39 +20,49 @@ function InsertHttp(req, res, cb) {
     dbbase.query('insert into HttpPreview set ?', postyData, cb);
 }
 
-function InsertSocket(socket, status, cb) {
-    var userinfo = querystring.parse(socket.handshake.headers.referer.split('?')[1]);
-    var headPic = userinfo.selectpicture;
-    var userName = userinfo.username;
-    var userMobile = userinfo.usermobile || '1';
-    var userAddress = socket.handshake.headers['x-real-ip'] || userinfo.remoteIP || socket.handshake.address; //socket.handshake.address; //socket.client.conn.remoteAddress;
+function InsertChatUser(userinfo, status, cb) {
+    userinfo.Status = status;
+    userinfo.UserMobile = 1;
+    userinfo.CreatedTime = new Date().toLocaleString();
+    dbbase.query('insert into ChatUsers set ?', userinfo, cb);
 
-    console.log(socket.handshake.headers['x-real-ip'] + '||' + socket.client.conn.remoteAddress + '\n');
-
-    var postyData = {
-        CreatedTime: new Date().toLocaleString(),
-        UserName: decodeURI(userName),
-        UserMobile: userMobile,
-        HeadPicture: headPic,
-        UserAddress: userAddress,
-        UserAgent: socket.handshake.headers['user-agent'],
-        Status: status
-    };
-    dbbase.query('insert into ChatUsers set ?', postyData, cb);
 }
 
 function InsertMessage(message, cb) {
 
     var postyData = {
-        CreatedTime: new Date().toLocaleString(),
+        CreatedTime: message.createdTime, //new Date().toLocaleString(),
         UserName: message.name,
-        Message: message.chatContent
+        Message: message.chatContent,
+        HeadPicture: message.img
     };
     dbbase.query('insert into ChatMessage set ?', postyData, cb);
 }
 
+function InsertOnlineUser(user, cb) {
+    user.CreatedTime = new Date().toLocaleString();
+    dbbase.query('insert into OnlineUsers set ?', user, cb);
+}
+
+function DelOnlineUser(sessionId, cb) {
+    dbbase.query('DELETE FROM OnlineUsers WHERE SessionId= ?', sessionId, cb);
+}
+
+
+function CheckUserName(req, cb) {
+    dbbase.query(' SELECT COUNT(*) as Num FROM OnlineUsers WHERE UserName= ?', req.query.username, cb);
+}
+
+function GetNewMsgs(cb) {
+    dbbase.query('SELECT UserName AS `name`,Message AS chatContent,HeadPicture AS img,CreatedTime as createdTime FROM ChatMessage ORDER BY Id DESC LIMIT 5;', cb);
+}
+
 module.exports = {
-    InsertHttp: InsertHttp,
-    InsertSocket: InsertSocket,
-    InsertMessage: InsertMessage
+    InsertHttp,
+    InsertChatUser,
+    InsertMessage,
+    CheckUserName,
+    InsertOnlineUser,
+    DelOnlineUser,
+    GetNewMsgs
 }
