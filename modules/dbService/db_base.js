@@ -2,7 +2,7 @@ var mysql = require('mysql');
 
 var db_config = {
     "connectionLimit": 30,
-    "host": "47.95.222.240",
+    "host": "127.0.0.1",
     "port": "3306",
     "user": "root",
     "password": "123456",
